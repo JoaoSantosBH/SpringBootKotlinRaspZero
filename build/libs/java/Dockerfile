@@ -1,6 +1,7 @@
-FROM java:8
-ADD docker-0.0.1-SNAPSHOT.jar docker.jar
+FROM arm32v6/alpine:3.7
+RUN apk update \
+    && apk add openjdk8 \
+    && java -version
+ADD docker.jar docker.jar
 EXPOSE 8080
-#CMD ["java","-jar","docker.jar"]
-#RUN java -jar docker.jar
 CMD java -jar docker.jar

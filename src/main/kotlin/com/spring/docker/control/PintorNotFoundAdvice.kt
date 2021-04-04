@@ -11,7 +11,7 @@ internal class PintorNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(PintorNotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    fun comodoNotFoundHandler(ex: PintorNotFoundException): String? {
+    fun pintorNotFoundHandler(ex: PintorNotFoundException): String? {
         return ex.message
     }
 }

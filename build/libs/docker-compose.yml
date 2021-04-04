@@ -1,25 +1,35 @@
 version: '3.5'
 services:
+database:
+  image: hypriot/rpi-mysql
+  container_name: mysqldb
+  ports:
+    - "3306:3036"
+  networks:
+    - spring
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: pintores
+    MYSQL_USER: root
+    MYSQL_PASSWORD: root
+    MYSQL_ROOT_HOST: '%'
+
   restapi:
+    container_name: spring-jar
     image: docker-file-app
-    links:
+    depends_on:
       - database
     ports:
       - "8080:8080"
-
+    networks:
+      - spring
     environment:
-          SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql:3306/database?autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/pintores
+      SPRING_DATASOURCE_USERNAME: jomar
+      SPRING_DATASOURCE_PASSWORD: abcd1234
+networks:
+  spring:
+    driver: bridge
 
-    depends_on:
-      - database
-  database:
-    image: mysql-docker
-    ports:
-      - "3306:3036"
-
-    environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: pintores
-      MYSQL_USER: finley
-      MYSQL_PASSWORD: abcd1234
-      volumes: db-volume:/var/lib/mysql
+volumes:
+  db-volume:

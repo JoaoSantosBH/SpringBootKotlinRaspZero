@@ -13,7 +13,7 @@ class PintorController() {
 
     @RequestMapping("/")
     fun home(): String? {
-        return "Welcome to My Kotlin Docker Spring App"
+        return "Welcome to My Kotlin Docker Spring App on Raspberry PI Zero "
     }
 
     @GetMapping("/pintor")
@@ -27,7 +27,7 @@ class PintorController() {
         return repository.save(pinResponse)
     }
 
-    @GetMapping("/Painter/{id}")
+    @GetMapping("/pintor/{id}")
     fun fetchPainterById(@PathVariable id: Int): Pintor? {
         return repository.findById(id)
                 .orElseThrow { PintorNotFoundException(id) }
